@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Attendly Amizone Sync",
+  "version": "1.0.0",
+  "description": "Sync authenticated Amizone timetable and attendance data into Attendly without storing Amizone credentials.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://s.amizone.net/*",
+    "http://localhost:5173/*",
+    "https://*.vercel.app/*"
+  ],
+  "action": {
+    "default_title": "Sync Amizone to Attendly"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://s.amizone.net/*"
+      ],
+      "js": [
+        "amizone.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://localhost:5173/*",
+        "https://*.vercel.app/*"
+      ],
+      "js": [
+        "attendly.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
